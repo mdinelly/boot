@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model atendimento {
+  id                    Int      @id @default(autoincrement())
+  language              String   @db.VarChar(10)
+  link                  String   @db.VarChar(255)
+  model                 String   @db.VarChar(255)
+  number                String   @db.VarChar(255)
+  picture_model         String   @db.VarChar(255)
+  imei                  String?  @db.VarChar(255)
+  protocolo             String   @db.VarChar(255)
+  status                String   @default("aberto") @db.VarChar(255)
+  link_entregue_cliente String?  @db.VarChar(255)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @default(now())
+}
+
+model whatsapps {
+  id        Int      @id @default(autoincrement())
+  session   String?  @db.Text
+  qrcode    String?  @db.Text
+  status    String?  @db.VarChar(255)
+  battery   String?  @db.VarChar(255)
+  plugged   Boolean?
+  name      String   @unique(map: "name") @db.VarChar(255)
+  isDefault Boolean  @default(false)
+  retries   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model stageChatBots {
+  id        Int      @id @default(autoincrement())
+  stage     Int      @default(0)
+  number    String   @db.VarChar(255)
+  protocolo String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
